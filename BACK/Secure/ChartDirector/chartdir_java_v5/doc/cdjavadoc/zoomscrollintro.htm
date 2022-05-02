@@ -1,0 +1,58 @@
+<HTML>
+<HEAD>
+<Title>Zooming and Scrolling Framework (Windows)</Title>
+<link type='text/css' rel='Stylesheet' href="maxchartapi.css" />
+</HEAD>
+<body bgcolor="#FFFFFF" text="#000000" topmargin="0" leftmargin="0" rightmargin="0" marginwidth="0" marginheight="0">
+<p class="heading0">ChartDirector Ver 5.0 (Java Edition)</p>
+<p class="heading1">Zooming and Scrolling Framework (Windows)</p>
+<hr class="separator">
+<div class="content"><div style="background-color:#cccccc;width:99%;padding:10px">
+<b><font color="#FF0000">NOTE:</font></b> This section describes Zooming and Scrolling Framework for Windows applications only. For web applications, please refer to <a href="zoomscrollintroweb.htm">Zooming and Scrolling Framework (Web)</a>.
+</div><br>
+</div><p class="heading1a">Introduction</p><div class="content">
+When talking about "zooming", it is common to think about zooming like a digital photograph, in which everything is magnified, but is otherwise exactly the same. The zoom ratio is usually a few times and the same data (the photograph) are used at all zoom levels.<br><br>
+There is a much more powerful type of zooming, like zooming in a map. For example, one may start with a world map, and zoom all the way down to seeing the streets and buildings within a city. The zoom ratio can be in the order of 500000 - 1000000 times. Different presentation method may be used at different scales. For example, the world map may show only terrain information, while at highest zoom ratio the map may show the names of individual streets.<br><br>
+The ChartDirector Zooming and Scrolling Framework is designed based on the second model or zooming. The key features are:<br><br>
+<ul>
+<li>Virtually unlimited zoom ratio.<br><br>
+For example, one can zoom from 10 years down to 1 second (a zoom ratio of 315 million times).<br><br>
+<li>Allows different chart types and data grouping methods at different scales.<br><br>
+For example, to plot temperature for 1 day, one may be interested hourly temperature. On the other hand, to plot the temperature for 1 year, one may be interested in the daily high-low range (eg. using two lines for high and low daily temperatures and fill the region in between) rather than the hourly temperatures.<br><br>
+<li>Click and drag to control zooming and scrolling.<br><br>
+The <a href="ChartViewer.htm">ChartViewer</a> control implements zoom/scroll controls via mouse actions. One may use the mouse to drag to scroll, drag to select a region to zoom into, click to zoom in, and click to zoom out depending on the mouse usage mode (set using <a href="ChartViewer.setMouseUsage.htm">ChartViewer.setMouseUsage</a>).<br><br>
+<li>Allows external controls for zooming and scrolling.<br><br>
+In many applications, it may be desirable to have several controls to control zooming and scrolling. For example, for a time based chart, in addition to use "drag to scroll", one may want to have a date/time picker control to select the start date on the axis (equivalent to scrolling the chart), or to use scroll bars for scrolling, or to use "navigation buttons" (like playing video games) for scrolling.<br><br>
+</ul>
+</div><p class="heading1a">The View Port</p><div class="content">
+The ChartDirector Zooming and Scrolling framework is based on the concept of a view port.<br><br>
+A view port can be imagined as a rectangular window of an underlying rectangular surface. For example, a chart that has 10 years of data can be imagined as a very long chart. If one only displays one of the year, we can say the view port covers only 10% of the underlying chart.<br><br>
+With the view port concept, scrolling can be handled as moving the view port, while zooming in and out can be handled as changing the view port size.
+</div><p class="heading2">The ViewPortChanged Event</p><div class="content">
+The <a href="ChartViewer.htm">ChartViewer</a> control may update the view port based on mouse actions on the plot area. The supported mouse actions are drag to scroll, drag to select a region to zoom into, click to zoom in, and click to zoom out. The handling of mouse actions is configured by using <a href="ChartViewer.setMouseUsage.htm">ChartViewer.setMouseUsage</a>.<br><br>
+When the view port is updated by mouse actions, ChartViewer will fire the <a href="ViewPortListener.viewPortChanged.htm">ViewPortListener.viewPortChanged</a> event. It is expected the event handler will update the chart and other controls as necessary.<br><br>
+During drag to scroll, as the mouse is being dragged, ChartViewer will repeatedly update the view port and fires ViewPortChanged events. This allows the chart to be updated continuous to reflect the moving view port. However, for these updates, it is not necessary to update the image map (if any is used) associated with the chart. The image map only needs to be updated when the drag is completed, that is, when the mouse button is released.<br><br>
+The ViewPortChanged event handler is called with two boolean flags - needUpdateChart and needUpdateImageMap - to indicate if the current if the chart and/or image map needs to be updated for the current event.
+</div><p class="heading2">Updating View Port with External Controls</p><div class="content">
+The ChartDirector Zooming and Scrolling framework allows external controls, such as scroll bars, slide bars, date/time picker controls, text and combo boxes, buttons, etc, to control zooming and scrolling. This is by allowing them to query and modify the view port through various getViewPortNNN and setViewPortNNN methods of the <a href="ChartViewer.htm">ChartViewer</a> object. After modifying the view port, these controls can fire the ViewPortChanged event by using <a href="ChartViewer.updateViewPort.htm">ChartViewer.updateViewPort</a>.
+</div><p class="heading1a">ViewPortChanged Event Handler</p><div class="content">
+The primary function of the ViewPortChanged event handler is to draw the chart based on the current view port settings.<br><br>
+A typical structure of the draw chart code will be like:<br><br>
+<ul>
+<li>Copy or retrieve the necessary data (data that are visible in the view port) to data arrays for chart creation.<br><br>
+You may also use all the data without regarding whether they are visible in the view port or not. ChartDirector will automatically clip the data to the view port. However, if there are many data points (which is typical of charts that need to zoom and scroll), it is recommended you do copy only the visible data to the data arrays to improve charting performance.<br><br>
+The sample program <a href="zoomscrolldemo.htm">Zooming and Scrolling Demonstration (Windows)</a> demonstrates copying the necessary data for charting, while the sample program <a href="zoomscrolldemo2.htm">Zooming and Scrolling Demonstration (2) (Windows)</a> simply uses all the data without regarding the visibility of the data.<br><br>
+<li>Aggregate the data if necessary.<br><br>
+For charts that need to zoom or scroll, it is not uncommon to have data series with thousands or even millions of points. However, considering a typical plot area is less than a thousand pixels in width, for most chart types, it is not necessary to plot that many points.<br><br>
+Plotting too many data points will reduce the effective resolution of the chart rather than increasing it. It is like drawing a world map on the screen by drawing each street in each city in detail. Instead of getting a very detail map, one probably get a not too useful map.<br><br>
+In general, for most chart types, the best chart is obtained when the number of data points is about the same as the number of pixels in width. As a rule of thumb, one may try to aggregate the data points together so that the number of points is 50% to 100% of the number of pixels in width.<br><br>
+Aggregation means to group multiple data points together into one point. Common aggregation methods include using averaging, resampling, peak value, summation, etc. The exact method to use depends on your chart type and the nature of the data. For example, in a line chart, one may use averaging as the aggregation method, while for an area chart, one may use the peak value as the aggregation method.<br><br>
+Sometimes, it may be meaningful to aggregate one data series into multiple data series. For example, suppose we have a data series representing the hourly temperature, and we need to plot it for a year (365 x 24 = 8760 points). Instead of plotting the data directly, we may aggregate the data into 3 daily series, representing the maximum, minimum and average temperature of a day. We may even use a color to fill the region between the maximum and minimum lines. The resulting chart will be much for elegant and useful than using the raw data directly.<br><br>
+ChartDirector includes a utility method <a href="ArrayMath.aggregate.htm">ArrayMath.aggregate</a> that can be used to conveniently aggregate data. If your data comes from a database, sometimes it is also possible to use the database to aggregate data (using aggregate SQL statements).<br><br>
+The sample program <a href="zoomscrolldemo.htm">Zooming and Scrolling Demonstration (Windows)</a> demonstrates aggregating the data to keep the number of data points not exceeding the pixel width of the plot area, while the sample program <a href="zoomscrolldemo2.htm">Zooming and Scrolling Demonstration (2) (Windows)</a> does not use data aggregation.<br><br>
+<li>Draw the chart with the given data.<br><br>
+There are plenty of sample code elsewhere in this documentation on how to draw various charts with ChartDirector. A special point to note is that the charting code may need to configure the axis scale as according to the view port. In some cases, the axis scale may be determined by auto-scaling when the chart is initially displayed. The axis scale will be saved so as to compute future axis scales when the chart is zoomed in.<br><br>
+</ul>
+Apart from drawing the chart, the ViewPortChanged event handler may also need to update external controls to reflect the view port. For example, when the user drags to zoom into a region, one may need to modify the date shown in an external date/time picker control to reflect the updated start date, and similarly update external scroll bars, etc.</div><br>
+<hr class="separator"><div class="copyright">&copy; 2008 Advanced Software Engineering Limited. All rights reserved.</div></body>
+</HTML>

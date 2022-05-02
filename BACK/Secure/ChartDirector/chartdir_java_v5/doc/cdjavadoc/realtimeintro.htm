@@ -1,0 +1,22 @@
+<HTML>
+<HEAD>
+<Title>Realtime Charts in ChartDirector</Title>
+<link type='text/css' rel='Stylesheet' href="maxchartapi.css" />
+</HEAD>
+<body bgcolor="#FFFFFF" text="#000000" topmargin="0" leftmargin="0" rightmargin="0" marginwidth="0" marginheight="0">
+<p class="heading0">ChartDirector Ver 5.0 (Java Edition)</p>
+<p class="heading1">Realtime Charts in ChartDirector</p>
+<hr class="separator">
+<p class="heading1aa">Realtime Chart Architecture For Windows Applications</p><div class="content">
+For Windows applications, a realtime chart may be achieved by simply redrawing the chart periodically.<br><br>
+Typically, a data buffer is used to store the data to be displayed in the chart. A data update routine updates the values in the buffer in realtime. A charting routine uses the data in the buffer to create the chart.<br><br>
+If the data update rate is slower than once per second, then one can simply redraw the chart immediately when the data buffer is updated.<br><br>
+However, if the data update rate is very fast (eg. 100 times per second), a better design is to update the data buffer and the chart asynchronously. In this case, the data update routine can still update the data buffer as fast as it needs to. The charting routine updates the chart at a slower rate, such as a few times per second. Essentially, the charting routine is taking a "snapshot" of the data buffer a few times per second and display it on screen.<br><br>
+To facilitate creation of realtime charts with fast update rate (faster than once per second), the <a href="ChartViewer.htm">ChartViewer</a> control contains built-in rate control features. It ensures there is at least 20ms (configurable using <a href="ChartViewer.setUpdateInterval.htm">ChartViewer.setUpdateInterval</a>) between two consecutive chart updates. This allows the GUI to remain smooth and responsive even with extremely fast chart update rate.<br><br>
+To use the rate control features of ChartDirector, instead of updating the chart directly, <a href="ChartViewer.updateViewPort.htm">ChartViewer.updateViewPort</a> may be used to fire the ViewPortChanged event, and the chart is updated in the event handler. ChartViewer will ensure there is at least 20ms between two ViewPortChanged events, and will delay the event and merge multiple events into one event if necessary.
+</div><p class="heading1a">Realtime Chart Architecture For Web Applications</p><div class="content">
+For web applications, a realtime chart may be achieved by using browser side Javascript to periodic refreshes the &lt;IMG&gt; tag that displays the chart.<br><br>
+Typically, an HTML web page is created with an &lt;IMG&gt; tag for displaying the chart. The URL of the &lt;IMG&gt; tag points to a charting page that generates the most updated chart as an image. A browser side Javascript in the HTML web page periodically refreshes the &lt;IMG&gt; tag. This causes the chart to update periodically without refreshing the entire web page.<br><br>
+The code for refreshing the &lt;IMG&gt; tag can easily be implemented using standard browser side Javascript without any third party library at all. The ChartDirector Javascript ChartViewer also has a special method <a href="JsChartViewer.streamUpdate.htm">JsChartViewer.streamUpdate</a> to support realtime charts, providing enhanced features such as double buffering, handling of overlapping updates, error handling and cache avoidance.</div><br>
+<hr class="separator"><div class="copyright">&copy; 2008 Advanced Software Engineering Limited. All rights reserved.</div></body>
+</HTML>

@@ -1,0 +1,550 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+    <title>Amazon review data</title>
+    <meta name="author" content="Julian McAuley">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="Amazon%20review%20data_files/dc.js" async="" type="text/javascript"></script><script type="text/javascript" language="javascript" src="Amazon%20review%20data_files/jquery-1.js"></script>
+    <link rel="stylesheet" type="text/css" href="Amazon%20review%20data_files/style.css">
+  </head>
+<body>
+
+<div id="left_column">
+</div>
+
+<div id="main">
+<!-- <div id="header"> -->
+  <h1>Amazon product data</h1>
+
+  <p><b><a href="http://cseweb.ucsd.edu/%7Ejmcauley/">Julian McAuley</a></b>, UCSD</p>
+
+<h2>Description</h2>
+
+<p>This dataset contains product reviews and metadata from Amazon, including 142.8 million reviews spanning May 1996 - July 2014.</p>
+
+<p>
+This dataset includes reviews (ratings, text, helpfulness votes), 
+product metadata (descriptions, category information, price, brand, and 
+image features), and links (also viewed/also bought graphs).
+</p>
+<!-- 143663229 -->
+
+<h2>Files</h2>
+
+<h3>Complete review data</h3>
+
+<p>Please see the <b>per-category</b> files below, and only download these (large!) files if you absolutely need them:</p>
+
+<p><b><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">raw review data</a></b> (20gb) - all 142.8 million reviews</p>
+
+<p>The above file contains some duplicate reviews, mainly due to 
+near-identical products whose reviews Amazon merges, e.g. VHS and DVD 
+versions of the same movie. These duplicates have been removed in the 
+two files below:</p>
+
+<p><b><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">user review data</a></b> (18gb) - duplicate items removed (82.68 million reviews), sorted by user</p>
+<p><b><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">product review data</a></b> (18gb) - duplicate items removed, sorted by product</p>
+
+<p>Finally, the following file removes duplicates more aggressively, 
+removing duplicates even if they are written by different users. This 
+accounts for users with multiple accounts or plagiarized reviews. Such 
+duplicates account for less than 1 percent of reviews, though this 
+dataset is probably preferable for sentiment analysis type tasks.</p>
+
+<p><b><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">aggressively deduplicated data</a></b> (18gb) - no duplicates whatsoever (82.83 million reviews)</p>
+
+<p>Format is one-review-per-line in (loose) json. See files below for further help reading the data.</p>
+
+<h3>Sample review:</h3>
+
+<p>
+</p><div class="code">{
+  "reviewerID": "A2SUAM1J3GNN3B",
+  "asin": "0000013714",
+  "reviewerName": "J. McDonald",
+  "helpful": [2, 3],
+  "reviewText": "I bought this for my husband who plays the piano.  He 
+is having a wonderful time playing these old hymns.  The music  is at 
+times hard to read because we think the book was published for singing 
+from more than playing from.  Great purchase though!",
+  "overall": 5.0,
+  "summary": "Heavenly Highway Hymns",
+  "unixReviewTime": 1252800000,
+  "reviewTime": "09 13, 2009"
+}
+</div>
+<p></p>
+
+<p>where
+
+  </p><ul>
+    <li><tt>reviewerID</tt> - ID of the reviewer, e.g. <a href="http://www.amazon.com/gp/cdp/member-reviews/A2SUAM1J3GNN3B">A2SUAM1J3GNN3B</a></li>
+    <li><tt>asin</tt> - ID of the product, e.g. <a href="http://www.amazon.com/dp/0000013714">0000013714</a></li>
+    <li><tt>reviewerName</tt> - name of the reviewer</li>
+    <li><tt>helpful</tt> - helpfulness rating of the review, e.g. 2/3</li>
+    <li><tt>reviewText</tt> - text of the review</li>
+    <li><tt>overall</tt> - rating of the product</li>
+    <li><tt>summary</tt> - summary of the review</li>
+    <li><tt>unixReviewTime</tt> - time of the review (unix time)</li>
+    <li><tt>reviewTime</tt> - time of the review (raw)</li>
+  </ul>
+<p></p>
+
+<h3>Metadata</h3>
+
+<p>
+Metadata includes descriptions, price, sales-rank, brand info, and co-purchasing links:
+</p>
+
+<p><b><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">metadata</a></b> (1.9gb) - metadata for 9.4 million products</p>
+
+<h3>Sample metadata:</h3>
+
+<p>
+</p><div class="code">{
+  "asin": "0000031852",
+  "title": "Girls Ballet Tutu Zebra Hot Pink",
+  "price": 3.17,
+  "imUrl": 
+"http://ecx.images-amazon.com/images/I/51fAmVkTbyL._SY300_.jpg",
+  "related":
+  {
+    "also_bought": ["B00JHONN1S", "B002BZX8Z6", "B00D2K1M3O", 
+"0000031909", "B00613WDTQ", "B00D0WDS9A", "B00D0GCI8S", "0000031895", 
+"B003AVKOP2", "B003AVEU6G", "B003IEDM9Q", "B002R0FA24", "B00D23MC6W", 
+"B00D2K0PA0", "B00538F5OK", "B00CEV86I6", "B002R0FABA", "B00D10CLVW", 
+"B003AVNY6I", "B002GZGI4E", "B001T9NUFS", "B002R0F7FE", "B00E1YRI4C", 
+"B008UBQZKU", "B00D103F8U", "B007R2RM8W"],
+    "also_viewed": ["B002BZX8Z6", "B00JHONN1S", "B008F0SU0Y", 
+"B00D23MC6W", "B00AFDOPDA", "B00E1YRI4C", "B002GZGI4E", "B003AVKOP2", 
+"B00D9C1WBM", "B00CEV8366", "B00CEUX0D8", "B0079ME3KU", "B00CEUWY8K", 
+"B004FOEEHC", "0000031895", "B00BC4GY9Y", "B003XRKA7A", "B00K18LKX2", 
+"B00EM7KAG6", "B00AMQ17JA", "B00D9C32NI", "B002C3Y6WG", "B00JLL4L5Y", 
+"B003AVNY6I", "B008UBQZKU", "B00D0WDS9A", "B00613WDTQ", "B00538F5OK", 
+"B005C4Y4F6", "B004LHZ1NY", "B00CPHX76U", "B00CEUWUZC", "B00IJVASUE", 
+"B00GOR07RE", "B00J2GTM0W", "B00JHNSNSM", "B003IEDM9Q", "B00CYBU84G", 
+"B008VV8NSQ", "B00CYBULSO", "B00I2UHSZA", "B005F50FXC", "B007LCQI3S", 
+"B00DP68AVW", "B009RXWNSI", "B003AVEU6G", "B00HSOJB9M", "B00EHAGZNA", 
+"B0046W9T8C", "B00E79VW6Q", "B00D10CLVW", "B00B0AVO54", "B00E95LC8Q", 
+"B00GOR92SO", "B007ZN5Y56", "B00AL2569W", "B00B608000", "B008F0SMUC", 
+"B00BFXLZ8M"],
+    "bought_together": ["B002BZX8Z6"]
+  },
+  "salesRank": {"Toys &amp; Games": 211836},
+  "brand": "Coxlures",
+  "categories": [["Sports &amp; Outdoors", "Other Sports", "Dance"]]
+}
+</div>
+<p></p>
+
+<p>where
+
+  </p><ul>
+    <li><tt>asin</tt> - ID of the product, e.g. <a href="http://www.amazon.com/dp/0000031852">0000031852</a></li>
+    <li><tt>title</tt> - name of the product</li>
+    <li><tt>price</tt> - price in US dollars (at time of crawl)</li>
+    <li><tt>imUrl</tt> - url of the product image</li>
+    <li><tt>related</tt> - related products (also bought, also viewed, bought together, buy after viewing)</li>
+    <li><tt>salesRank</tt> - sales rank information</li>
+    <li><tt>brand</tt> - brand name</li>
+    <li><tt>categories</tt> - list of categories the product belongs to</li>
+  </ul>
+<p></p>
+
+<h3>Visual Features</h3>
+
+<p>We extracted visual features from each product image using a deep CNN
+ (see citation below). Image features are stored in a binary format, 
+which consists of 10 characters (the product ID), followed by 4096 
+floats (repeated for every product). See files below for further help 
+reading the data.</p>
+
+<p><b><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">visual features</a></b> (141gb) - visual features for all products</p>
+
+<h2>Per-category files</h2>
+
+<p>
+Below are files for individual product categories, which have already had duplicate item reviews removed.
+</p>
+
+<p>
+</p><table style="width: 90%;">
+
+<!--
+<tr>
+  <td>Category</td>
+  <td>Reviews</td>
+  <td>Metadata</td>
+  <td>Visual features</td>
+</tr>
+-->
+
+<tbody><tr>
+  <td>Books</td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">reviews</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">metadata</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">image features</a></td>
+</tr>
+
+<tr>
+  <td>Electronics</td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">reviews</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">metadata</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">image features</a></td>
+</tr>
+
+<tr>
+  <td>Movies and TV</td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">reviews</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">metadata</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">image features</a></td>
+</tr>
+
+<tr>
+  <td>CDs and Vinyl</td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">reviews</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">metadata</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">image features</a></td>
+</tr>
+
+<tr>
+  <td>Clothing, Shoes and Jewelry</td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">reviews</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">metadata</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">image features</a></td>
+</tr>
+
+<tr>
+  <td>Home and Kitchen</td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">reviews</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">metadata</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">image features</a></td>
+</tr>
+
+<tr>
+  <td>Kindle Store</td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">reviews</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">metadata</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">image features</a></td>
+</tr>
+
+<tr>
+  <td>Sports and Outdoors</td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">reviews</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">metadata</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">image features</a></td>
+</tr>
+
+<tr>
+  <td>Cell Phones and Accessories</td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">reviews</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">metadata</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">image features</a></td>
+</tr>
+
+<tr>
+  <td>Health and Personal Care</td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">reviews</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">metadata</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">image features</a></td>
+</tr>
+
+<tr>
+  <td>Toys and Games</td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">reviews</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">metadata</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">image features</a></td>
+</tr>
+
+<tr>
+  <td>Video Games</td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">reviews</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">metadata</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">image features</a></td>
+</tr>
+
+<tr>
+  <td>Tools and Home Improvement</td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">reviews</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">metadata</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">image features</a></td>
+</tr>
+
+<tr>
+  <td>Beauty</td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">reviews</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">metadata</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">image features</a></td>
+</tr>
+
+<tr>
+  <td>Apps for Android</td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">reviews</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">metadata</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">image features</a></td>
+</tr>
+
+<tr>
+  <td>Office Products</td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">reviews</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">metadata</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">image features</a></td>
+</tr>
+
+<tr>
+  <td>Pet Supplies</td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">reviews</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">metadata</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">image features</a></td>
+</tr>
+
+<tr>
+  <td>Automotive</td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">reviews</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">metadata</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">image features</a></td>
+</tr>
+
+<tr>
+  <td>Grocery and Gourmet Food</td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">reviews</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">metadata</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">image features</a></td>
+</tr>
+
+<tr>
+  <td>Patio, Lawn and Garden</td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">reviews</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">metadata</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">image features</a></td>
+</tr>
+
+<tr>
+  <td>Baby</td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">reviews</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">metadata</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">image features</a></td>
+</tr>
+
+<tr>
+  <td>Digital Music</td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">reviews</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">metadata</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">image features</a></td>
+</tr>
+
+<tr>
+  <td>Musical Instruments</td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">reviews</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">metadata</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">image features</a></td>
+</tr>
+
+<tr>
+  <td>Amazon Instant Video</td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">reviews</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">metadata</a></td>
+  <td><a href="http://jmcauley.ucsd.edu/data/amazon/amazon_readme.txt">image features</a></td>
+</tr>
+</tbody></table>
+<p></p>
+
+<h2>Citation</h2>
+
+<p>Please cite one or both of the following if you use the data in any way:</p>
+
+<p>
+  <b>Image-based recommendations on styles and substitutes</b><br>
+  J. McAuley, C. Targett, J. Shi, A. van den Hengel<br>
+  <em>SIGIR</em>, 2015<br>
+  <a href="http://cseweb.ucsd.edu/%7Ejmcauley/pdfs/sigir15.pdf">pdf</a>
+</p>
+
+<p>
+  <b>Inferring networks of substitutable and complementary products</b><br>
+  J. McAuley, R. Pandey, J. Leskovec<br>
+  <em>Knowledge Discovery and Data Mining</em>, 2015<br>
+  <a href="http://cseweb.ucsd.edu/%7Ejmcauley/pdfs/kdd15.pdf">pdf</a>
+</p>
+
+<!-- <p>
+  <b>Hidden factors and hidden topics: understanding rating dimensions with review text</b><br>
+  J. McAuley, J. Leskovec<br>
+  <em>RecSys</em><br>
+  <a href="http://cseweb.ucsd.edu/~jmcauley/pdfs/recsys13.pdf">pdf</a> |
+  <a href="http://cseweb.ucsd.edu/~jmcauley/reviews/recsys13.txt">reviews</a> |
+  <a href="http://cseweb.ucsd.edu/~jmcauley/bibfile.txt">bibtex</a> |
+  <a href="http://cseweb.ucsd.edu/~jmcauley/code/code_RecSys13.tar.gz">code (C++)</a>
+  <a href="http://cseweb.ucsd.edu/~jmcauley/pdfs/slides_recsys13.pdf">slides</a>
+</p> -->
+
+<h2>Code</h2>
+
+<h3>Reading the data</h3>
+
+<p>Data can be treated as python dictionary objects. A simple script to read any of the above the data is as follows:</p>
+
+<p>
+</p><div class="code">def parse(path):
+  g = gzip.open(path, 'r')
+  for l in g:
+    yield eval(l)
+</div>
+<p></p>
+
+<h3>Convert to 'strict' json</h3>
+
+<p>The above data can be read with python 'eval', but is not strict 
+json. If you'd like to use some language other than python, you can 
+convert the data to strict json as follows:</p>
+
+<p>
+</p><div class="code">import json
+import gzip
+
+def parse(path):
+  g = gzip.open(path, 'r')
+  for l in g:
+    yield json.dumps(eval(l))
+
+f = open("output.strict", 'w')
+for l in parse("reviews_Video_Games.json.gz"):
+  f.write(l + '\n')
+</div>
+<p></p>
+
+<h3>Pandas data frame</h3>
+
+<p>This code reads the data into a pandas data frame:</p>
+
+<p>
+</p><div class="code">import pandas as pd
+import gzip
+
+def parse(path):
+  g = gzip.open(path, 'rb')
+  for l in g:
+    yield eval(l)
+
+def getDF(path):
+  i = 0
+  df = {}
+  for d in parse(path):
+    df[i] = d
+    i += 1
+  return pd.DataFrame.from_dict(df, orient='index')
+
+df = getDF('reviews_Video_Games.json.gz')
+</div>
+<p></p>
+
+<!--
+<h3>Convert to CSV</h3>
+
+<p>This code converts (a selection of fields from) the above files to CSV format:</p>
+
+<p>
+<div class="code">import csv
+
+fields = ["asin", "description", "brand"]
+
+csvOut = gzip.open("meta_Video_Games.csv.gz", 'w')
+writer = csv.writer(csvOut)
+
+for product in parse("meta_Video_Games.json.gz"):
+  line = []
+  for f in fields:
+    if product.has_key(f): line.append(product[f])
+    else: line.append("")
+  writer.writerow(line)
+</div>
+</p>
+-->
+
+<h3>Read image features</h3>
+
+<p>
+</p><div class="code">import struct
+
+def readImageFeatures(path):
+  f = open(path, 'rb')
+  while True:
+    asin = f.read(10)
+    if asin == '': break
+    feature = []
+    for i in range(4096):
+      feature.append(struct.unpack('f', f.read(4)))
+    yield asin, feature
+</div>
+<p></p>
+
+<h3>Example: compute average rating</h3>
+<p>
+</p><div class="code">ratings = []
+
+for review in parse("reviews_Video_Games.json.gz"):
+  ratings.append(review['overall'])
+
+print sum(ratings) / len(ratings)
+</div>
+<p></p>
+
+</div>
+
+<script type="text/javascript">
+if (typeof jQuery != 'undefined') {
+  jQuery(document).ready(function($) {
+    var filetypes = /\.(zip|exe|pdf|doc*|xls*|ppt*|mp3)$/i;
+    var baseHref = '';
+    if (jQuery('base').attr('href') != undefined)
+      baseHref = jQuery('base').attr('href');
+    jQuery('a').each(function() {
+      var href = jQuery(this).attr('href');
+      if (href && (href.match(/^https?\:/i)) && (!href.match(document.domain))) {
+        jQuery(this).click(function() {
+          var extLink = href.replace(/^https?\:\/\//i, '');
+          _gaq.push(['_trackEvent', 'External', 'Click', extLink]);
+          if (jQuery(this).attr('target') != undefined && jQuery(this).attr('target').toLowerCase() != '_blank') {
+            setTimeout(function() { location.href = href; }, 200);
+            return false;
+          }
+        });
+      }
+      else if (href && href.match(/^mailto\:/i)) {
+        jQuery(this).click(function() {
+          var mailLink = href.replace(/^mailto\:/i, '');
+          _gaq.push(['_trackEvent', 'Email', 'Click', mailLink]);
+        });
+      }
+      else if (href && href.match(filetypes)) {
+        jQuery(this).click(function() {
+          var extension = (/[.]/.exec(href)) ? /[^.]+$/.exec(href) : undefined;
+          var filePath = href;
+          _gaq.push(['_trackEvent', 'Download', 'Click-' + extension, filePath]);
+          if (jQuery(this).attr('target') != undefined && jQuery(this).attr('target').toLowerCase() != '_blank') {
+            setTimeout(function() { location.href = baseHref + href; }, 200);
+            return false;
+          }
+        });
+      }
+    });
+  });
+}
+</script>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-23010657-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+
+</body></html>
